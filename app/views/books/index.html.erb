@@ -1,0 +1,53 @@
+<%= render 'list', books: @books %>
+<%= flash[:notice] %>
+<p id="notice"><%= notice %></p>
+<% if @book.errors.any? %>
+  <%= @book.errors.count %>件のエラーが発生しました
+  <ul>
+    <% @book.errors.full_messages.each do |message| %>
+      <li><%= message %></li>
+    <% end %>
+  </ul>
+<% end %>
+<h1>User info</h1>
+<div class="container">
+  <div class="row">
+    <div class="col-lg-4" style="background-color: orange;">
+       <p id="notice"></p>
+    <% if book.image.attached? %>
+      <%= image_tag book.image, size: "200x200" %>
+      <% else %>
+    <%= image_tag 'no_image', size: "200x200" %>
+    <% end %>
+    <tr>
+      <th>name</th>
+      <th>introduction</th>
+      <th colspan="1"></th>
+    </tr>
+    </div>
+    </div>
+   </div>
+
+    <div class="col-lg-8">
+    <table class="table table-striped">
+      <tbody>
+      <tr>
+      <% @books.each do |book| %>
+      <th><%= book.title %></th>
+      <th><%= book.opinion %></th>
+      <th>
+      <%= link_to 'Show', book_path(book.id) %>
+      </th>
+      </tr>
+     <% end %>
+  </tbody>
+</table>
+</div>
+
+   <% @books.each do |book| %>
+  <div>
+    <%= link_to books_path(book.id) do %>
+      <%= image_tag book.get_image %>
+    <% end %>
+
+    
