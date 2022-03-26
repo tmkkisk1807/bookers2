@@ -1,22 +1,25 @@
 class BooksController < ApplicationController
+  protect_from_forgery
+
   def new
     @book = Book.new
-end
+  end
 
 def create
     @book = Book.new(book_params)
     @book.user_id = current_user.id
-    if @book.save
+    if @book.save!
     redirect_to book_path(@book.id)
-    else
-      @books = Book.all
-      render :index
+  else
+    @books = Book.all
+    render :index
     end
     flash[:notice] = "You have created book successfully."
   end
 
  def index
-　  @book = Book.find(params[:id])
+　  @book = Book.new
+　  @books = Book.all
  end
 
  def show
@@ -31,18 +34,18 @@ def create
      @book = Book.find(params[:id])
     if @book.update(book_params)
      redirect_to book_path(@book.id)
-     else
+    else
       @book = Book.all
-      render :index
+      render :edit
     end
      flash[:notice] = "Book was updated successfully."
-    end
+  end
 
  def destroy
     book = Book.find(params[:id])
     book.destroy
     redirect_to '/books'
-end
+ end
 
   private
   def book_params
